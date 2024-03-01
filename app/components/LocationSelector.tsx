@@ -1,31 +1,29 @@
-import { Box, Grid, Stack, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Grid, TextField, Typography } from "@mui/material";
+import React from "react";
 
-const LocationSelector = ({ name, onSelect }) => {
-  const [selected, setSelected] = useState(false);
-
+const LocationSelector = ({ car, onSelect }) => {
   return (
     <Box
       sx={{
-        bgcolor: selected === false ? "white" : "#84ec8f",
+        bgcolor: car.selected === false ? "white" : "#84ec8f",
         borderRadius: 2,
         "&:hover": {
-          bgcolor: selected === false ? "#dadada" : undefined,
+          bgcolor: car.selected === false ? "#dadada" : undefined,
           border: 1,
-          borderColor: selected === false ? "gray" : "#137e1e",
+          borderColor: car.selected === false ? "gray" : "#137e1e",
         },
       }}
       onClick={onSelect}
     >
       <Grid container spacing={1} padding={2}>
         <Grid item xs={4}>
-          <Typography variant="body1">{name}</Typography>
+          <Typography variant="body1">{car.id}</Typography>
         </Grid>
         <Grid item xs={4}>
           <TextField
             id="outlined-read-only-input"
             label="X"
-            defaultValue="0"
+            defaultValue={car.selectedX}
             size="small"
             InputProps={{
               readOnly: true,
@@ -36,7 +34,7 @@ const LocationSelector = ({ name, onSelect }) => {
           <TextField
             id="outlined-read-only-input"
             label="Y"
-            defaultValue="0"
+            defaultValue={car.selectedY}
             size="small"
             InputProps={{
               readOnly: true,

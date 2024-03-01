@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { Stack } from "@mui/material";
 import LocationSelector from "./LocationSelector";
+import { Car } from "../types/types";
 
-const LocationSelectors = () => {
-  const [selectors] = useState(["Car1", "Car2"]);
-
-  const handleSelect = () => {
-    console.log("handling selection");
+const LocationSelectors = ({ cars, onChange }) => {
+  const handleSelect = (selectedCar: Car) => {
+    const updatedCars = cars.map((car) => ({
+      ...car,
+      selected: car.id === selectedCar.id ? !car.selected : false,
+    }));
+    onChange(updatedCars);
   };
 
   return (
     <Stack spacing={2}>
-      {selectors.map((selector) => (
+      {cars.map((car) => (
         <LocationSelector
-          key={selector}
-          name={selector}
-          onSelect={handleSelect}
+          key={car.id}
+          car={car}
+          onSelect={() => handleSelect(car)}
         />
       ))}
     </Stack>
