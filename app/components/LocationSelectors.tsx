@@ -3,22 +3,14 @@ import { Stack } from "@mui/material";
 import LocationSelector from "./LocationSelector";
 import { Car } from "../types/types";
 
-const LocationSelectors = ({ cars, onChange }) => {
-  const handleSelect = (selectedCar: Car) => {
-    const updatedCars = cars.map((car) => ({
-      ...car,
-      selected: car.id === selectedCar.id ? !car.selected : false,
-    }));
-    onChange(updatedCars);
-  };
-
+const LocationSelectors = ({ cars, onSelect }) => {
   return (
     <Stack spacing={2}>
       {cars.map((car) => (
         <LocationSelector
           key={car.id}
           car={car}
-          onSelect={() => handleSelect(car)}
+          onSelect={() => onSelect(car)}
         />
       ))}
     </Stack>

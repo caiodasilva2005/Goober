@@ -4,9 +4,7 @@ import Image from "next/image";
 
 const Model = () => {
   return (
-    <Box>
-      <Image src="/model.png" alt="Model Image" width="1000" height="1000" />
-    </Box>
+    <Image src="/model.png" alt="Model Image" width="1000" height="1000" />
   );
 };
 

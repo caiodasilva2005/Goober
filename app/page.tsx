@@ -2,46 +2,97 @@
 import { Box, Grid, Typography } from "@mui/material";
 import RunButton from "./components/RunButton";
 import LocationSelectors from "./components/LocationSelectors";
-import Model from "./components/Model";
 import { useState } from "react";
-import { Car } from "./types/types";
+import { Car, Location } from "./types/types";
+import LocationButton from "./components/LocationButton";
 
 export default function Home() {
   const [cars, setCars] = useState<Car[]>([
     {
       id: 1,
-      selectedX: 0,
-      selectedY: 0,
       selected: false,
     },
     {
       id: 2,
-      selectedX: 1,
-      selectedY: 1,
       selected: false,
     },
     {
       id: 3,
-      selectedX: 4,
-      selectedY: 5,
       selected: false,
     },
   ]);
 
+  const [locations, setLocations] = useState<Location[]>([
+    {
+      id: 1,
+      name: "loc1",
+      Xpos: 1,
+      Ypos: 1,
+      occupied: false,
+    },
+    {
+      id: 2,
+      name: "loc2",
+      Xpos: 2,
+      Ypos: 2,
+      occupied: false,
+    },
+    {
+      id: 3,
+      name: "loc3",
+      Xpos: 3,
+      Ypos: 3,
+      occupied: false,
+    },
+  ]);
   const handleRun = () => {
     console.log("Running cars");
+    const updatedCars = cars.map((car) => ({
+      ...car,
+      selected: false,
+    }));
+    setCars(updatedCars);
   };
 
-  const handleChange = (updatedCars) => {
-    console.log("Updated", updatedCars);
+  const handleSelect = (selectedCar: Car) => {
+    const updatedCars = cars.map((car) => ({
+      ...car,
+      selected: car.id === selectedCar.id ? !car.selected : false,
+    }));
     setCars(updatedCars);
+  };
+
+  function occupyLocation(selectedLocation: Location) {
+    const updatedLocations = locations.map((location) => ({
+      ...location,
+      occupied: location.id === selectedLocation.id ? true : location.occupied,
+    }));
+    console.log(updatedLocations);
+    setLocations(updatedLocations);
+  }
+
+  const handleLocation = (location: Location) => {
+    const selectedIndex = cars.findIndex((car) => car.selected);
+    let updatedCars = [...cars];
+    if (selectedIndex !== -1) {
+      updatedCars[selectedIndex].location = location;
+      occupyLocation(location);
+      if (selectedIndex !== cars.length - 1)
+        handleSelect(updatedCars[selectedIndex + 1]);
+      else handleSelect(updatedCars[0]);
+    } else {
+      handleSelect(updatedCars[0]);
+    }
   };
 
   return (
     <main>
       <Grid container>
         <Grid item xs={7}>
-          <Model />
+          <LocationButton
+            location={locations[0]}
+            onLocSelect={handleLocation}
+          />
         </Grid>
         <Grid item xs={5}>
           <Box
@@ -73,7 +124,7 @@ export default function Home() {
               GOOBER
             </Typography>
             <Box sx={{ flexGrow: 1 }}>
-              <LocationSelectors cars={cars} onChange={handleChange} />
+              <LocationSelectors cars={cars} onSelect={handleSelect} />
             </Box>
             <RunButton onRun={handleRun} />
           </Box>

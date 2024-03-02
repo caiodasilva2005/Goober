@@ -23,7 +23,7 @@ const LocationSelector = ({ car, onSelect }) => {
           <TextField
             id="outlined-read-only-input"
             label="X"
-            defaultValue={car.selectedX}
+            defaultValue={car.location === undefined ? 0 : car.location.Xpos}
             size="small"
             InputProps={{
               readOnly: true,
@@ -34,7 +34,7 @@ const LocationSelector = ({ car, onSelect }) => {
           <TextField
             id="outlined-read-only-input"
             label="Y"
-            defaultValue={car.selectedY}
+            defaultValue={car.location === undefined ? 0 : car.location.Ypos}
             size="small"
             InputProps={{
               readOnly: true,
