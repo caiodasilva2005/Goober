@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+
+# Goober
+
+Web App for Autonomous Intersection Regulation (AIR) Project by Caio DaSilva, Scott Abramson, Aidan Hanson, and Vladyslav Aviedov
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
