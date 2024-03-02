@@ -1,10 +1,12 @@
 import React from "react";
-import { Box } from "@mui/material";
 import Image from "next/image";
+import { Box } from "@mui/material";
 
 const Model = () => {
   return (
-    <Image src="/model.png" alt="Model Image" width="1000" height="1000" />
+    <Box>
+      <Image src="/model.png" alt="Model Image" width="1000" height="1000" />
+    </Box>
   );
 };
 
