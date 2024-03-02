@@ -8,6 +8,6 @@ export interface Location {
 
 export interface Car {
   id: number;
-  location?: Location;
+  selectedLocation?: Location;
   selected: boolean;
 }

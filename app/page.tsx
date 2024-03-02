@@ -5,6 +5,7 @@ import LocationSelectors from "./components/LocationSelectors";
 import { useState } from "react";
 import { Car, Location } from "./types/types";
 import LocationButton from "./components/LocationButton";
+import Model from "./components/Model";
 
 export default function Home() {
   const [cars, setCars] = useState<Car[]>([
@@ -44,7 +45,15 @@ export default function Home() {
       Ypos: 3,
       occupied: false,
     },
+    {
+      id: 4,
+      name: "loc4",
+      Xpos: 4,
+      Ypos: 4,
+      occupied: false,
+    },
   ]);
+
   const handleRun = () => {
     console.log("Running cars");
     const updatedCars = cars.map((car) => ({
@@ -62,26 +71,41 @@ export default function Home() {
     setCars(updatedCars);
   };
 
-  function occupyLocation(selectedLocation: Location) {
-    const updatedLocations = locations.map((location) => ({
-      ...location,
-      occupied: location.id === selectedLocation.id ? true : location.occupied,
-    }));
-    console.log(updatedLocations);
+  function updateOccupied(
+    selectedLocation: Location,
+    previousLocation: Location | undefined
+  ) {
+    const updatedLocations = locations.map((location) => {
+      if (previousLocation !== undefined && previousLocation.id === location.id)
+        return { ...previousLocation, occupied: false };
+      if (selectedLocation.id === location.id)
+        return { ...selectedLocation, occupied: true };
+      return location;
+    });
     setLocations(updatedLocations);
+  }
+
+  function updateIndex(index: number, numCars: number) {
+    if (index !== numCars - 1) return index + 1;
+    else return 0;
   }
 
   const handleLocation = (location: Location) => {
     const selectedIndex = cars.findIndex((car) => car.selected);
     let updatedCars = [...cars];
-    if (selectedIndex !== -1) {
-      updatedCars[selectedIndex].location = location;
-      occupyLocation(location);
-      if (selectedIndex !== cars.length - 1)
-        handleSelect(updatedCars[selectedIndex + 1]);
-      else handleSelect(updatedCars[0]);
-    } else {
+    if (selectedIndex === -1) {
       handleSelect(updatedCars[0]);
+      return;
+    }
+
+    if (location.occupied === false) {
+      const previousLocation = updatedCars[selectedIndex].selectedLocation;
+      updatedCars[selectedIndex].selectedLocation = location;
+      updateOccupied(location, previousLocation);
+      const newIndex = updateIndex(selectedIndex, cars.length);
+      handleSelect(updatedCars[newIndex]);
+    } else {
+      console.log("occupied");
     }
   };
 
@@ -91,6 +115,18 @@ export default function Home() {
         <Grid item xs={7}>
           <LocationButton
             location={locations[0]}
+            onLocSelect={handleLocation}
+          />
+          <LocationButton
+            location={locations[1]}
+            onLocSelect={handleLocation}
+          />
+          <LocationButton
+            location={locations[2]}
+            onLocSelect={handleLocation}
+          />
+          <LocationButton
+            location={locations[3]}
             onLocSelect={handleLocation}
           />
         </Grid>
