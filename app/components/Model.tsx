@@ -4,8 +4,8 @@ import { Box } from "@mui/material";
 
 const Model = () => {
   return (
-    <Box>
-      <Image src="/model.png" alt="Model Image" width="1000" height="1000" />
+    <Box position="relative">
+      <Image src="/model.png" alt="Model Image" width="800" height="800" />
     </Box>
   );
 };

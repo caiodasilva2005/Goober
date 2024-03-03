@@ -34,33 +34,44 @@ export default function Home() {
     {
       id: 2,
       name: "loc2",
-      Xpos: 2,
-      Ypos: 2,
+      Xpos: 5,
+      Ypos: 6,
       occupied: false,
     },
     {
       id: 3,
       name: "loc3",
-      Xpos: 3,
-      Ypos: 3,
+      Xpos: 10,
+      Ypos: 2,
       occupied: false,
     },
     {
       id: 4,
       name: "loc4",
-      Xpos: 4,
-      Ypos: 4,
+      Xpos: 9,
+      Ypos: 5,
+      occupied: false,
+    },
+    {
+      id: 5,
+      name: "loc5",
+      Xpos: 11,
+      Ypos: 18,
       occupied: false,
     },
   ]);
 
-  const handleRun = () => {
-    console.log("Running cars");
+  function ResetSelect(cars: Car[]) {
     const updatedCars = cars.map((car) => ({
       ...car,
       selected: false,
     }));
     setCars(updatedCars);
+  }
+
+  const handleRun = () => {
+    console.log("Running cars");
+    ResetSelect(cars);
   };
 
   const handleSelect = (selectedCar: Car) => {
@@ -104,31 +115,35 @@ export default function Home() {
       updateOccupied(location, previousLocation);
       const newIndex = updateIndex(selectedIndex, cars.length);
       handleSelect(updatedCars[newIndex]);
-    } else {
-      console.log("occupied");
+      return;
     }
+
+    console.log("occupied");
   };
 
   return (
     <main>
       <Grid container>
         <Grid item xs={7}>
-          <LocationButton
-            location={locations[0]}
-            onLocSelect={handleLocation}
-          />
-          <LocationButton
-            location={locations[1]}
-            onLocSelect={handleLocation}
-          />
-          <LocationButton
-            location={locations[2]}
-            onLocSelect={handleLocation}
-          />
-          <LocationButton
-            location={locations[3]}
-            onLocSelect={handleLocation}
-          />
+          <Box>
+            <Model />
+            <LocationButton
+              location={locations[0]}
+              onLocSelect={handleLocation}
+            />
+            <LocationButton
+              location={locations[1]}
+              onLocSelect={handleLocation}
+            />
+            <LocationButton
+              location={locations[2]}
+              onLocSelect={handleLocation}
+            />
+            <LocationButton
+              location={locations[3]}
+              onLocSelect={handleLocation}
+            />
+          </Box>
         </Grid>
         <Grid item xs={5}>
           <Box
