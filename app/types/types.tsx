@@ -3,11 +3,12 @@ export interface Location {
   name: string;
   Xpos: number;
   Ypos: number;
-  occupied: boolean;
+  occupied?: Car;
 }
 
 export interface Car {
   id: number;
   selectedLocation?: Location;
   selected: boolean;
+  error?: boolean;
 }

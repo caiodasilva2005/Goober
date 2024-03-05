@@ -29,35 +29,30 @@ export default function Home() {
       name: "loc1",
       Xpos: 1,
       Ypos: 1,
-      occupied: false,
     },
     {
       id: 2,
       name: "loc2",
       Xpos: 5,
       Ypos: 6,
-      occupied: false,
     },
     {
       id: 3,
       name: "loc3",
       Xpos: 10,
       Ypos: 2,
-      occupied: false,
     },
     {
       id: 4,
       name: "loc4",
       Xpos: 9,
       Ypos: 5,
-      occupied: false,
     },
     {
       id: 5,
       name: "loc5",
       Xpos: 11,
       Ypos: 18,
-      occupied: false,
     },
   ]);
 
@@ -78,19 +73,21 @@ export default function Home() {
     const updatedCars = cars.map((car) => ({
       ...car,
       selected: car.id === selectedCar.id ? !car.selected : false,
+      error: undefined,
     }));
     setCars(updatedCars);
   };
 
   function updateOccupied(
+    selectedCar: Car,
     selectedLocation: Location,
     previousLocation: Location | undefined
   ) {
     const updatedLocations = locations.map((location) => {
       if (previousLocation !== undefined && previousLocation.id === location.id)
-        return { ...previousLocation, occupied: false };
+        return { ...previousLocation, occupied: undefined };
       if (selectedLocation.id === location.id)
-        return { ...selectedLocation, occupied: true };
+        return { ...selectedLocation, occupied: selectedCar };
       return location;
     });
     setLocations(updatedLocations);
@@ -104,21 +101,24 @@ export default function Home() {
   const handleLocation = (location: Location) => {
     const selectedIndex = cars.findIndex((car) => car.selected);
     let updatedCars = [...cars];
+
     if (selectedIndex === -1) {
       handleSelect(updatedCars[0]);
       return;
     }
 
-    if (location.occupied === false) {
+    if (location.occupied === undefined) {
       const previousLocation = updatedCars[selectedIndex].selectedLocation;
       updatedCars[selectedIndex].selectedLocation = location;
-      updateOccupied(location, previousLocation);
+      updateOccupied(updatedCars[selectedIndex], location, previousLocation);
       const newIndex = updateIndex(selectedIndex, cars.length);
       handleSelect(updatedCars[newIndex]);
       return;
     }
 
-    console.log("occupied");
+    updatedCars[selectedIndex].error = true;
+    setCars(updatedCars);
+    return;
   };
 
   return (
