@@ -16,8 +16,15 @@ const LocationButton = ({ location, onLocSelect }) => {
     <OverlayTrigger
       key={location.id}
       placement="bottom"
-      overlay={
-        <Box>
+      overlay={({
+        placement: _placement,
+        arrowProps: _arrowProps,
+        show: _show,
+        popper: _popper,
+        hasDoneInitialMeasure: _hasDoneInitialMeasure,
+        ...props
+      }) => (
+        <Box {...props}>
           {location.occupied ? (
             <Box
               sx={{
@@ -58,7 +65,7 @@ const LocationButton = ({ location, onLocSelect }) => {
             </Box>
           )}
         </Box>
-      }
+      )}
     >
       <Box
         position="absolute"
