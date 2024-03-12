@@ -53,12 +53,20 @@ export default function Home() {
   function ResetSelect(cars: Car[]) {
     const updatedCars = cars.map((car) => ({
       ...car,
+      error: undefined,
       selected: false,
     }));
     setCars(updatedCars);
   }
 
   const handleRun = () => {
+    const selectedIndex = cars.findIndex((car) => !car.selectedLocation);
+    if (selectedIndex !== -1) {
+      let updatedCars = [...cars];
+      updatedCars[selectedIndex].error = "No Location Selected";
+      setCars(updatedCars);
+      return;
+    }
     console.log("Running cars");
     ResetSelect(cars);
   };
@@ -110,7 +118,7 @@ export default function Home() {
       return;
     }
 
-    updatedCars[selectedIndex].error = true;
+    updatedCars[selectedIndex].error = "Location Is Occupied";
     setCars(updatedCars);
     return;
   };
@@ -137,13 +145,13 @@ export default function Home() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              bgcolor: "white",
+              bgcolor: "#c4c3c3",
               height: "100vh",
               boxShadow: 3,
               borderTop: 16,
               borderBottom: 16,
-              borderTopColor: "yellow",
-              borderBottomColor: "yellow",
+              borderTopColor: "black",
+              borderBottomColor: "black",
             }}
           >
             <Typography
@@ -154,7 +162,7 @@ export default function Home() {
                 fontSize: 64,
                 fontWeight: "bold",
                 fontStyle: "italic",
-                color: "yellow",
+                color: "black",
               }}
             >
               GOOBER
