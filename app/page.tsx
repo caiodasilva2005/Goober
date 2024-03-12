@@ -48,12 +48,6 @@ export default function Home() {
       Xpos: 9,
       Ypos: 5,
     },
-    {
-      id: 5,
-      name: "loc5",
-      Xpos: 11,
-      Ypos: 18,
-    },
   ]);
 
   function ResetSelect(cars: Car[]) {
@@ -127,22 +121,13 @@ export default function Home() {
         <Grid item xs={7}>
           <Box>
             <Model />
-            <LocationButton
-              location={locations[0]}
-              onLocSelect={handleLocation}
-            />
-            <LocationButton
-              location={locations[1]}
-              onLocSelect={handleLocation}
-            />
-            <LocationButton
-              location={locations[2]}
-              onLocSelect={handleLocation}
-            />
-            <LocationButton
-              location={locations[3]}
-              onLocSelect={handleLocation}
-            />
+            {locations.map((location) => (
+              <LocationButton
+                key={location.id}
+                location={location}
+                onLocSelect={handleLocation}
+              />
+            ))}
           </Box>
         </Grid>
         <Grid item xs={5}>
