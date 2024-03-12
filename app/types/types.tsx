@@ -10,5 +10,5 @@ export interface Car {
   id: number;
   selectedLocation?: Location;
   selected: boolean;
-  error?: boolean;
+  error?: string;
 }

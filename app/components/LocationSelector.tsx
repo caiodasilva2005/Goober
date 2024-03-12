@@ -27,8 +27,8 @@ const LocationSelector = ({ car, onSelect }) => {
         </Grid>
         <Grid item xs={5}>
           <TextField
-            error={car.error}
-            helperText={car.error && "Location Is Occupied"}
+            error={car.error !== undefined}
+            helperText={car.error && car.error}
             id="outlined-read-only-input"
             label="Location"
             defaultValue={
